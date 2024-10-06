@@ -1,12 +1,10 @@
 #!/bin/bash
-export FILE_PATH=${FILE_PATH:-'./webssh'}
-export PORT=${PORT:-'8080'}
-export USER=${USER:-''}
-export PASS=${PASS:-''}
+export FILE_PATH=${FILE_PATH:-'./webssh'}  # 安装目录
+export PORT=${PORT:-'8080'}                # web端口
+export USER=${USER:-''}                    # 登录用户名，可以为空
+export PASS=${PASS:-''}                    # 登录密码，可以为空
 
-if [ ! -d "${FILE_PATH}" ]; then
-    mkdir -p ${FILE_PATH}
-fi
+[ ! -d "${FILE_PATH}" ] && mkdir -p "${FILE_PATH}"
 
 ARCH=$(uname -m) && DOWNLOAD_DIR="${FILE_PATH}" && mkdir -p "$DOWNLOAD_DIR" && FILE_INFO=()
 if [ "$ARCH" == "arm" ] || [ "$ARCH" == "arm64" ] || [ "$ARCH" == "aarch64" ]; then
