@@ -1,14 +1,14 @@
 #!/bin/bash
-export FILE_PATH=${FILE_PATH:-'./webssh'}     # 安装目录
-export PORT=${PORT:-'8080'}                    # web端口
+export FILE_PATH=${FILE_PATH:-'./webssh'}      # 安装目录
+export PORT=${PORT:-'8888'}                    # web端口
 export USER=${USER:-''}                        # 登录用户名，可以为空
 export PASS=${PASS:-''}                        # 登录密码，可以为空
 
 mkdir -p "${FILE_PATH}"; ARCH=$(uname -m); DOWNLOAD_DIR="${FILE_PATH}"; FILE_INFO=""
-if [ "$ARCH" = "arm" ] || [ "$ARCH" = "arm64" ] || [ "$ARCH" = "aarch64" ]; then
-    FILE_INFO="https://github.com/Jrohy/webssh/releases/latest/download/webssh_linux_arm64 webssh"
-elif [ "$ARCH" = "amd64" ] || [ "$ARCH" = "x86_64" ] || [ "$ARCH" = "x86" ]; then
-    FILE_INFO="https://github.com/Jrohy/webssh/releases/latest/download/webssh_linux_amd64 webssh"
+if [ "$ARCH" = "arm64" ] || [ "$ARCH" = "aarch64" ]; then
+    FILE_INFO="https://github.com/eooce/webssh/releases/download/webssh/webssh-amd64 webssh"
+elif [ "$ARCH" = "amd64" ] || [ "$ARCH" = "x86_64" ]; then
+    FILE_INFO="https://github.com/eooce/webssh/releases/download/webssh/webssh-amd64 webssh"
 else
     echo "Unsupported architecture: $ARCH"
     exit 1
