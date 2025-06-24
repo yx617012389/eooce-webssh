@@ -84,7 +84,7 @@ export default {
                     foreground: '#ffffff',          // 字体颜色
                     cursor: '#ffffff',              // 光标颜色
                     selection: '#acacac7d',         // 选中区域颜色
-                    blue: '#0950ee',        
+                    blue: '#0950ee',              
                     brightBlue: '#71afff',
                 }
             })
@@ -230,7 +230,6 @@ export default {
         },
         async connected() {
             const sshInfo = this.$store.state.sshInfo
-            // 深度拷贝对象
             this.ssh = Object.assign({}, sshInfo)
             // 校验ssh连接信息是否正确
             const result = await checkSSH(this.$store.getters.sshReq)
