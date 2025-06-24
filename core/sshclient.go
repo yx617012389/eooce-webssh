@@ -124,7 +124,6 @@ func (sclient *SSHClient) InitTerminal(ws *websocket.Conn, rows, cols int) *SSHC
 // Connect ws连接
 func (sclient *SSHClient) Connect(ws *websocket.Conn, timeout time.Duration, closeTip string) {
 	stopCh := make(chan struct{})
-	//这里第一个协程获取用户的输入
 	go func() {
 		for {
 			// p为用户输入
@@ -164,7 +163,7 @@ func (sclient *SSHClient) Connect(ws *websocket.Conn, timeout time.Duration, clo
 			log.Println(err)
 		}
 	}()
-	// 设置ws超时时间timer
+	// 设置ws超时时间
 	stopTimer := time.NewTimer(timeout)
 	defer stopTimer.Stop()
 	// 主循环
