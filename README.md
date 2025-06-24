@@ -75,3 +75,6 @@ docker-compose up -d
    ```
    - 默认监听端口为 8888，可通过 `-p` 参数指定端口。
    - 可通过 `-a user:pass` 启用 Web 登录认证。
+
+## 鸣谢
+[Jrohy](https://github.com/Jrohy/webssh)
