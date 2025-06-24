@@ -8,7 +8,9 @@ COMPRESS_TYPE="zip"  # 可选 zip 或 tar.gz
 
 # 支持的平台列表
 PLATFORMS=(
+    "linux/386"
     "linux/amd64"
+    "linux/arm"
     "linux/arm64"
     "linux/s390x"
     "windows/amd64"
