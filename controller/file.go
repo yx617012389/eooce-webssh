@@ -287,8 +287,7 @@ func detectHomeDir(sftpClient *sftp.Client, username string) string {
 		return "/root"
 	}
 
-	// 3. 尝试探测常见的宿主目录
-	// 适用于 FreeBSD
+	// 3. 尝试探测常见的宿主目录，适用于 FreeBSD
 	potentialHome := fmt.Sprintf("/usr/home/%s", username)
 	if _, err := sftpClient.Stat(potentialHome); err == nil {
 		return potentialHome
