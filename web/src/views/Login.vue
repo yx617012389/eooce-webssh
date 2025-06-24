@@ -44,10 +44,10 @@
                 <div class="upload-flex-row">
                   <div class="upload-btn">
                     <i class="el-icon-folder-opened" style="margin-right:8px;"></i>
-                    选择文件
+                    上传密钥
                   </div>
                   <div class="upload-filename">
-                    {{ privateKeyFileName || '未选择私钥文件' }}
+                    {{ privateKeyFileName || '未选择密钥文件' }}
                   </div>
                 </div>
               </el-upload>
