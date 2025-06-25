@@ -16,7 +16,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//go:embed web/dist/*
+//go:embed public/*
 var f embed.FS
 
 var (
@@ -103,7 +103,7 @@ func main() {
 
 	// --- Static Files & SPA Frontend ---
 	// Serve static files from the 'static' directory
-	staticFS, _ := fs.Sub(f, "web/dist/static")
+	staticFS, _ := fs.Sub(f, "public/static")
 	server.StaticFS("/static", http.FS(staticFS))
 	
 	// For any other route, serve the index.html file.
@@ -120,7 +120,7 @@ func main() {
 			}
 		}
 		
-		indexHTML, err := f.ReadFile("web/dist/index.html")
+		indexHTML, err := f.ReadFile("public/index.html")
 		if err != nil {
 			c.String(http.StatusInternalServerError, "index.html not found")
 			return
