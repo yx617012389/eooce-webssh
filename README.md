@@ -3,10 +3,12 @@
 ## 项目简介
 
 WebSSH 是一个基于Go(后端)和Vue2(前端)的Web端SSH连接工具，集成SFTP文件管理
-连接界面
+* 连接界面
 ![image](https://github.com/user-attachments/assets/b2e5ccae-4be5-47ff-b1d0-3c1654a72486)
-终端和sftp管理页面
-![image](https://github.com/user-attachments/assets/bf91c2a7-b95b-4ca2-acfa-1b30ca0b3ae9)
+
+* 终端和sftp管理页面
+![image](https://github.com/user-attachments/assets/c0ee38c2-e336-4ec6-a845-2e527062b20c)
+
 
 ## 功能介绍
 
