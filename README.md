@@ -3,8 +3,10 @@
 ## 项目简介
 
 WebSSH 是一个基于Go(后端)和Vue2(前端)的Web端SSH连接工具，集成SFTP文件管理
-![image](https://github.com/user-attachments/assets/d2710db8-242f-4ea2-ac03-79a742395f24)
-
+连接界面
+![image](https://github.com/user-attachments/assets/b2e5ccae-4be5-47ff-b1d0-3c1654a72486)
+终端和sftp管理页面
+![image](https://github.com/user-attachments/assets/bf91c2a7-b95b-4ca2-acfa-1b30ca0b3ae9)
 
 ## 功能介绍
 
@@ -61,14 +63,14 @@ docker-compose up -d
 1. **环境要求**：Node.js 14+，Go 1.21+
 2. **安装前端依赖**：
    ```bash
-   cd webssh/web
+   cd webssh/frontend
    npm install
    ```
 3. **构建前端**：
    ```bash
    npm run build
    ```
-   构建产物在 web/dist 目录
+   构建产物在 根目录public
 4. **启动后端服务**：
    ```bash
    cd .. && go run main.go
