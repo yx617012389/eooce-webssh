@@ -6,7 +6,7 @@ module.exports = {
   publicPath: '/',
   outputDir: '../public',
   assetsDir: 'static',
-  lintOnSave: true,
+  lintOnSave: false,
   productionSourceMap: false,
   parallel: require('os').cpus().length > 1,
 
