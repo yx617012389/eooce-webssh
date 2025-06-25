@@ -16,6 +16,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//go:embed web/dist/*
 var f embed.FS
 
 var (
