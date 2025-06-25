@@ -70,7 +70,7 @@ docker-compose up -d
    ```
 3. **构建前端**：
    ```bash
-   npm run build
+   npm run fix && npm run build
    ```
    构建产物在 根目录public
 4. **启动后端服务**：
