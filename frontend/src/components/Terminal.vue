@@ -84,8 +84,9 @@ export default {
                     foreground: '#ffffff',          // 字体颜色
                     cursor: '#ffffff',              // 光标颜色
                     selection: '#acacac7d',         // 选中区域颜色
-                    blue: '#0950ee',        
-                    brightBlue: '#71afff',
+                    blue: '#0950ee',                // 蓝色
+                    brightMagenta: '#e879f9',       // 紫色
+                    brightBlue: '#71afff',          // 亮蓝色
                 }
             })
             this.term.loadAddon(fitAddon)

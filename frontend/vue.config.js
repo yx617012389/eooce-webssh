@@ -6,7 +6,7 @@ module.exports = {
   publicPath: '/',
   outputDir: '../public',
   assetsDir: 'static',
-  lintOnSave: false,
+  lintOnSave: true,
   productionSourceMap: false,
   parallel: require('os').cpus().length > 1,
 
@@ -39,37 +39,44 @@ module.exports = {
   },
 
   configureWebpack: (config) => {
-    // 性能配置
     config.performance = {
-      hints: 'warning',
-      maxEntrypointSize: 1024 * 1024 * 1.5,
-      maxAssetSize: 1024 * 1024
+      hints: false
     };
-    
-    // 优化代码分割
-    config.optimization = {
-      splitChunks: {
-        chunks: 'all',
-        cacheGroups: {
-          vendors: {
-            name: 'chunk-vendors',
-            test: /[\\/]node_modules[\\/]/,
-            priority: -10,
-            chunks: 'initial'
-          },
-          common: {
-            name: 'chunk-common',
-            minChunks: 2,
-            priority: -20,
-            chunks: 'initial',
-            reuseExistingChunk: true
+
+    // 生产环境优化配置
+    if (process.env.NODE_ENV === 'production') {
+      config.optimization = {
+        splitChunks: {
+          chunks: 'all',
+          minSize: 20000,
+          maxSize: 512000,
+          maxAsyncRequests: 30,
+          maxInitialRequests: 30,
+          automaticNameDelimiter: '-',
+          cacheGroups: {
+            vendors: {
+              name: 'chunk-vendors',
+              test: /[\\/]node_modules[\\/]/,
+              priority: -10,
+              chunks: 'initial'
+            },
+            elementUI: {
+              name: 'chunk-elementUI',
+              priority: 20,
+              test: /[\\/]node_modules[\\/]element-ui[\\/]/
+            },
+            common: {
+              name: 'chunk-common',
+              minChunks: 2,
+              priority: -20,
+              chunks: 'initial',
+              reuseExistingChunk: true
+            }
           }
         }
-      }
-    };
-    
-    // 生产环境配置
-    if (process.env.NODE_ENV === 'production') {
+      };
+
+      // Gzip 压缩
       try {
         const CompressionPlugin = require('compression-webpack-plugin');
         config.plugins.push(
@@ -81,7 +88,7 @@ module.exports = {
           })
         );
       } catch (e) {
-        console.warn('compression-webpack-plugin 未安装，跳过Gzip压缩');
+        console.warn('compression-webpack-plugin 未安装，跳过 Gzip 压缩');
       }
     }
   },
@@ -89,10 +96,10 @@ module.exports = {
   chainWebpack: (config) => {
     config.plugins.delete('prefetch');
 
+    // 拷贝 public/img 到 ../public/static/img
     config.plugin('copy').tap(() => {
       return [
         [
-          // 复制 public/img 到 ../public/static/img
           {
             from: path.resolve(__dirname, 'public/img'),
             to: path.resolve(__dirname, '../public/static/img')
@@ -101,6 +108,7 @@ module.exports = {
       ];
     });
 
+    // 生产环境 source map
     if (process.env.NODE_ENV === 'production') {
       config.devtool('source-map');
     }

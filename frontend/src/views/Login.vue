@@ -2,7 +2,7 @@
   <div class="login-container" :class="{ 'dark-theme': isDarkTheme }">
     <div class="theme-switch-wrapper">
       <div class="theme-switch" @click="toggleTheme">
-        <i class="fas" :class="isDarkTheme ? 'fa-sun' : 'fa-moon'" style="margin-top: -40px;"></i>
+        <i class="fas" :class="isDarkTheme ? 'fa-sun' : 'fa-moon'" style="margin-top: -30px;"></i>
       </div>
     </div>
     <div class="card" style="margin: 20px auto;">
