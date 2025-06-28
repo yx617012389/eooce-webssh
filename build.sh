@@ -74,5 +74,3 @@ cd ..
 
 echo "构建完成！"
 echo "压缩包已创建: ${APP_NAME}.$COMPRESS_TYPE"
-
-# tar --exclude='web/node_modules' -czvf webssh.tar.gz -C /root/webssh . 
