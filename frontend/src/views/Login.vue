@@ -11,7 +11,7 @@
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item label="主机地址 (Hostname)">
-              <el-input v-model="sshInfo.hostname" placeholder="请输入主机地址" />
+              <el-input ref="hostnameInput" v-model="sshInfo.hostname" placeholder="请输入主机地址" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -23,12 +23,12 @@
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item label="用户名 (Username)">
-              <el-input v-model="sshInfo.username" placeholder="请输入用户名" />
+              <el-input ref="usernameInput" v-model="sshInfo.username" placeholder="请输入用户名" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="密码 (Password)">
-              <el-input v-model="sshInfo.password" type="password" placeholder="请输入密码" show-password/>
+              <el-input ref="passwordInput" v-model="sshInfo.password" type="password" placeholder="请输入密码" show-password/>
             </el-form-item>
           </el-col>
         </el-row>
@@ -46,7 +46,7 @@
                     <i class="el-icon-folder-opened" style="margin-right:8px;"></i>
                     上传密钥
                   </div>
-                  <div class="upload-filename">
+                  <div class="upload-filename" style="width: 12rem">
                     {{ privateKeyFileName || '未上传密钥文件' }}
                   </div>
                 </div>
@@ -73,9 +73,9 @@
         </el-row>
         <el-row v-if="generatedLink" style="margin-top: 18px;">
           <el-col :span="24">
-             <el-input v-model="generatedLink" readonly>
+            <el-input v-model="generatedLink" readonly class="gen-link-input">
               <template slot="append">
-                <el-button @click="copyLink" icon="el-icon-document-copy"></el-button>
+                <el-button style="color: #1adb6d;" @click="copyLink" icon="el-icon-document-copy"></el-button>
               </template>
             </el-input>
           </el-col>
@@ -140,6 +140,7 @@ export default {
       this.isDarkTheme = savedTheme === 'true'
     }
     
+    // 添加 Font Awesome CSS
     const link = document.createElement('link')
     link.rel = 'stylesheet'
     link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'
@@ -150,18 +151,30 @@ export default {
       // 清除之前的认证信息
       sessionStorage.removeItem('sshInfo')
       
-      if (!this.sshInfo.hostname || !this.sshInfo.username) {
-        this.$message.error('主机和用户名不能为空！')
+      if (!this.sshInfo.hostname) {
+        this.$message.error('主机不能为空！')
+        this.$nextTick(() => {
+          this.$refs.hostnameInput && this.$refs.hostnameInput.focus()
+        })
+        return
+      }
+      if (!this.sshInfo.username) {
+        this.$message.error('用户名不能为空！')
+        this.$nextTick(() => {
+          this.$refs.usernameInput && this.$refs.usernameInput.focus()
+        })
         return
       }
       if (!this.sshInfo.password && !this.sshInfo.privateKey) {
         this.$message.error('请输入密码或上传密钥！')
+        this.$nextTick(() => {
+          this.$refs.passwordInput && this.$refs.passwordInput.focus()
+        })
         return
       }
 
       // 根据实际使用的登录方式清理未使用的认证信息
       if (this.sshInfo.privateKey && this.sshInfo.privateKey.trim()) {
-        // 使用密钥登录时，清除密码
         this.sshInfo.password = ''
       } else if (this.sshInfo.password) {
         // 使用密码登录时，清除密钥相关信息
@@ -200,10 +213,9 @@ export default {
         query.password = btoa(this.sshInfo.password)
       }
 
-      this.$router.push({
-        path: '/terminal',
-        query
-      })
+      // 新标签页打开
+      const url = this.$router.resolve({ path: '/terminal', query }).href
+      window.open(url, '_blank')
     },
     onReset () {
       // 清除表单数据
@@ -234,8 +246,25 @@ export default {
         this.$message.warning('密钥方式登录不支持生成快捷链接，请改用密码登录方式')
         return
       }
-      if (!this.sshInfo.hostname || !this.sshInfo.username) {
-        this.$message.error('请填写主机、用户名和密码以生成链接！')
+      if (!this.sshInfo.hostname) {
+        this.$message.error('请填写主机地址！')
+        this.$nextTick(() => {
+          this.$refs.hostnameInput && this.$refs.hostnameInput.focus()
+        })
+        return
+      }
+      if (!this.sshInfo.username) {
+        this.$message.error('请填写用户名！')
+        this.$nextTick(() => {
+          this.$refs.usernameInput && this.$refs.usernameInput.focus()
+        })
+        return
+      }
+      if (!this.sshInfo.password && !this.sshInfo.privateKey) {
+        this.$message.error('请填写密码或上传密钥以生成链接！')
+        this.$nextTick(() => {
+          this.$refs.passwordInput && this.$refs.passwordInput.focus()
+        })
         return
       }
       const url = new URL(window.location.href)
@@ -409,7 +438,7 @@ export default {
   color: #6b7680;
   font-size: 15px;
   border-radius: 0 12px 12px 0;
-  padding: 1px 30px;
+  padding: 0 10px;
   height: 100%;
   flex: 1;
   white-space: nowrap;
@@ -557,5 +586,22 @@ export default {
   background-color: var(--primary-hover);
   border-color: var(--primary-hover);
   color: white;
+}
+
+.login-container ::v-deep .gen-link-input .el-input__inner {
+  border-radius: 10px 0 0 10px !important;
+  padding-right: 5px;
+}
+.login-container ::v-deep .gen-link-input .el-input-group__append {
+  border-radius: 0 10px 10px 0 !important;
+}
+
+.login-container ::v-deep .el-input-group__append {
+  background-color: var(--input-bg) !important;
+  border: none;
+  transition: background-color 0.3s;
+}
+.login-container.dark-theme ::v-deep .el-input-group__append {
+  background-color: var(--input-bg) !important;
 }
 </style>
