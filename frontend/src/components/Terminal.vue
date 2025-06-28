@@ -14,7 +14,7 @@
         <i class="fab fa-github"></i>
       </a>
       <button @click="toggleSftpPanel" class="sftp-toggle-btn" title="文件管理">
-        <i class="fas fa-folder-open"></i>
+        <i class="fas fa-folder-open" style="margin-left: 15px;"></i>
       </button>
     </div>
   </div>
@@ -83,10 +83,10 @@ export default {
                     background: '#000000',          // 背景色
                     foreground: '#ffffff',          // 字体颜色
                     cursor: '#ffffff',              // 光标颜色
-                    selection: '#acacac7d',         // 选中区域颜色
-                    blue: '#0950ee',                // 蓝色
+                    selection: '#daffe77a',         // 选中区域颜色
+                    blue: '#1981ff',                // 蓝色
                     brightMagenta: '#e879f9',       // 紫色
-                    brightBlue: '#71afff',          // 亮蓝色
+                    brightBlue: '#6eb0ff',          // 亮蓝色
                 }
             })
             this.term.loadAddon(fitAddon)
@@ -381,7 +381,7 @@ export default {
     right: 0;
     bottom: 0;
     width: 85%;
-    max-width: 320px;
+    max-width: 350px;
     transform: translateX(100%);
     transition: transform 0.3s ease-in-out;
     z-index: 20;
