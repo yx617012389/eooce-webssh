@@ -2,7 +2,7 @@
     <div class="file-list-wrapper">
         <div class="sftp-title">SFTP文件管理</div>
         <div class="file-header">
-            <el-input class="path-input" v-model="currentPath" size="small" @keyup.enter.native="getFileList()" placeholder="当前路径..."></el-input>
+            <el-input class="path-input" v-model="currentPath" size="small" @keyup.enter.native="getFileList()" @blur="getFileList" placeholder="当前路径..."></el-input>
             <el-button-group>
                 <el-button type="primary" size="small" icon="el-icon-s-home" @click="goToHome()" title="主目录"></el-button>
                 <el-button type="primary" size="small" icon="el-icon-arrow-up" @click="upDirectory()" title="返回上级目录"></el-button>
@@ -144,6 +144,7 @@ export default {
         },
         uploadSuccess(r, file) {
             this.uploadTip = `${file.name}${this.$t('uploadFinish')}!`
+            this.getFileList();
         },
         uploadProgress(e, f) {
             e.percent = e.percent / 2
