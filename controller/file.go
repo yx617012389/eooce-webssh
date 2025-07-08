@@ -237,12 +237,21 @@ func FileList(c *gin.Context) *ResponseBody {
 	}
 	defer sshClient.Close()
 
-	// 始终检测 home 目录
+	// 检测 home 目录
 	home := detectHomeDir(sshClient.Sftp, sshClient.Username)
 
-	// 如果 path 为空或为根目录，并且检测到的 home 目录有效，则使用 home 目录
-	if (path == "" || path == "/") && home != "/" {
+	// 如果 path 为 / 且 home 不为 /，且不是 root 用户，自动切换到 home
+	if path == "/" && home != "/" && sshClient.Username != "root" {
 		path = home
+	}
+
+	// 1. 如果 path 为空，首次进入，普通用户进入 home，root 进入 /
+	if path == "" {
+		if sshClient.Username == "root" {
+			path = "/"
+		} else {
+			path = home
+		}
 	}
 
 	files, err := sshClient.Sftp.ReadDir(path)
@@ -270,12 +279,12 @@ func FileList(c *gin.Context) *ResponseBody {
 	sort.Stable(fileList)
 	responseBody.Data = gin.H{
 		"list": fileList,
-		"home": home,
+		"home": home, // home 字段始终返回 home 目录
 	}
 	return &responseBody
 }
 
-// 自动检测家目录
+// 自动检测home目录
 func detectHomeDir(sftpClient *sftp.Client, username string) string {
 	// 1. 尝试获取当前工作目录
 	if wd, err := sftpClient.Getwd(); err == nil && wd != "" {
@@ -287,18 +296,16 @@ func detectHomeDir(sftpClient *sftp.Client, username string) string {
 		return "/root"
 	}
 
-	// 3. 尝试探测常见的宿主目录，适用于 FreeBSD
+	// 3. 先检测 /usr/home/用户名，再检测 /home/用户名
 	potentialHome := fmt.Sprintf("/usr/home/%s", username)
 	if _, err := sftpClient.Stat(potentialHome); err == nil {
 		return potentialHome
 	}
-
-	// 适用于大多数 Linux 发行版
 	potentialHome = fmt.Sprintf("/home/%s", username)
 	if _, err := sftpClient.Stat(potentialHome); err == nil {
 		return potentialHome
 	}
 
 	// 4. 如果都失败了，返回根目录
-	return "/"
+	return "/home"
 }
