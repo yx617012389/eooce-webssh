@@ -8,57 +8,57 @@
     <div class="card" style="margin: 20px auto;">
       <div class="title">WebSSH Console</div>
       <el-form :model="sshInfo" label-position="top" class="form-grid">
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="主机地址 (Hostname)">
-              <el-input ref="hostnameInput" v-model="sshInfo.hostname" placeholder="请输入主机地址" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="端口 (Port)">
-              <el-input v-model.number="sshInfo.port" placeholder="请输入端口(默认22)" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="用户名 (Username)">
-              <el-input ref="usernameInput" v-model="sshInfo.username" placeholder="请输入用户名" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="密码 (Password)">
-              <el-input ref="passwordInput" v-model="sshInfo.password" type="password" placeholder="请输入密码" show-password/>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="私钥 (Private Key)">
-              <el-upload
-                class="upload-key"
-                :show-file-list="false"
-                :before-upload="handlePrivateKeyUpload"
-                accept=".pem,.ppk,.key,.rsa,.id_rsa,.id_dsa,.txt"
-              >
-                <div class="upload-flex-row">
-                  <div class="upload-btn">
-                    <i class="el-icon-folder-opened" style="margin-right:8px;"></i>
-                    上传密钥
-                  </div>
-                  <div class="upload-filename" style="width: 12rem">
-                    {{ privateKeyFileName || '未上传密钥文件' }}
-                  </div>
-                </div>
-              </el-upload>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="密钥口令 (PIN)">
-              <el-input v-model="sshInfo.passphrase" placeholder="如果有设置请输入密钥口令" />
-            </el-form-item>
-          </el-col>
-        </el-row>
+                 <el-row :gutter="20">
+           <el-col :span="12">
+             <el-form-item label="主机地址 (Hostname)">
+               <el-input ref="hostnameInput" v-model="sshInfo.hostname" placeholder="请输入主机地址" />
+             </el-form-item>
+           </el-col>
+           <el-col :span="12">
+             <el-form-item label="端口 (Port)">
+               <el-input v-model.number="sshInfo.port" placeholder="请输入端口(默认22)" />
+             </el-form-item>
+           </el-col>
+         </el-row>
+                 <el-row :gutter="20">
+           <el-col :span="12">
+             <el-form-item label="用户名 (Username)">
+               <el-input ref="usernameInput" v-model="sshInfo.username" placeholder="请输入用户名" />
+             </el-form-item>
+           </el-col>
+           <el-col :span="12">
+             <el-form-item label="密码 (Password)">
+               <el-input ref="passwordInput" v-model="sshInfo.password" type="password" placeholder="请输入密码" show-password/>
+             </el-form-item>
+           </el-col>
+         </el-row>
+                 <el-row :gutter="20">
+           <el-col :xs="24" :sm="12">
+             <el-form-item label="私钥 (Private Key)">
+               <el-upload
+                 class="upload-key"
+                 :show-file-list="false"
+                 :before-upload="handlePrivateKeyUpload"
+                 accept=".pem,.ppk,.key,.rsa,.id_rsa,.id_dsa,.txt"
+               >
+                 <div class="upload-flex-row">
+                   <div class="upload-btn">
+                     <i class="el-icon-folder-opened" style="margin-right:8px;"></i>
+                     上传密钥
+                   </div>
+                   <div class="upload-filename" style="width: 12rem">
+                     {{ privateKeyFileName || '未上传密钥文件' }}
+                   </div>
+                 </div>
+               </el-upload>
+             </el-form-item>
+           </el-col>
+           <el-col :xs="24" :sm="12">
+             <el-form-item label="密钥口令 (PIN)">
+               <el-input v-model="sshInfo.passphrase" placeholder="如果有设置请输入密钥口令" />
+             </el-form-item>
+           </el-col>
+         </el-row>
         <el-row>
           <el-col :span="24">
             <el-form-item label="初始命令 (Initial command)">
@@ -152,14 +152,14 @@ export default {
       sessionStorage.removeItem('sshInfo')
       
       if (!this.sshInfo.hostname) {
-        this.$message.error('主机不能为空！')
+        this.$message.error('请输入主机地址！')
         this.$nextTick(() => {
           this.$refs.hostnameInput && this.$refs.hostnameInput.focus()
         })
         return
       }
       if (!this.sshInfo.username) {
-        this.$message.error('用户名不能为空！')
+        this.$message.error('请输入用户名！')
         this.$nextTick(() => {
           this.$refs.usernameInput && this.$refs.usernameInput.focus()
         })
@@ -247,21 +247,21 @@ export default {
         return
       }
       if (!this.sshInfo.hostname) {
-        this.$message.error('请填写主机地址！')
+        this.$message.error('请输入主机地址！')
         this.$nextTick(() => {
           this.$refs.hostnameInput && this.$refs.hostnameInput.focus()
         })
         return
       }
       if (!this.sshInfo.username) {
-        this.$message.error('请填写用户名！')
+        this.$message.error('请输入用户名！')
         this.$nextTick(() => {
           this.$refs.usernameInput && this.$refs.usernameInput.focus()
         })
         return
       }
       if (!this.sshInfo.password && !this.sshInfo.privateKey) {
-        this.$message.error('请填写密码或上传密钥以生成链接！')
+        this.$message.error('请输入密码或上传密钥以生成链接！')
         this.$nextTick(() => {
           this.$refs.passwordInput && this.$refs.passwordInput.focus()
         })
@@ -316,6 +316,90 @@ export default {
 .login-container ::v-deep .el-input__inner {
   font-size: medium;
   border-radius: 10px;
+  background: hsl(0deg 0% 100% / 5%);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s;
+  color: #333;
+}
+
+.login-container ::v-deep .el-input__inner:focus {
+  border-color: #409eff !important;
+  box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.2) !important;
+  caret: 2px solid #409eff !important;
+}
+
+.login-container ::v-deep .el-input.is-focus .el-input__inner {
+  border-color: #409eff !important;
+  box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.2) !important;
+  caret: 2px solid #409eff !important;
+}
+
+.login-container ::v-deep .el-input__inner::placeholder {
+  color: #565454 !important;
+  opacity: 1;
+}
+
+/* 密码显示/隐藏按钮样式 */
+.login-container ::v-deep .el-input__suffix {
+  background: transparent;
+  margin-right: 5px;
+}
+
+.login-container ::v-deep .el-input__suffix .el-input__suffix-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-container ::v-deep .el-input__suffix .el-input__suffix-inner .el-input__icon {
+  color: #666;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.login-container ::v-deep .el-input__suffix .el-input__suffix-inner .el-input__icon:hover {
+  color: #409eff;
+}
+
+.login-container.dark-theme ::v-deep .el-input__inner {
+  background: hsl(0deg 0% 100% / 5%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.login-container.dark-theme ::v-deep .el-input__inner:focus {
+  border-color: #409eff !important;
+  box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.2) !important;
+  caret: 2px solid #409eff !important;
+}
+
+.login-container.dark-theme ::v-deep .el-input.is-focus .el-input__inner {
+  border-color: #409eff !important;
+  box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.2) !important;
+  caret: 2px solid #409eff !important;
+}
+
+.login-container.dark-theme ::v-deep .el-input__inner::placeholder {
+  color: #ccc !important;
+  opacity: 1;
+}
+
+/* 深色主题密码显示/隐藏按钮样式 */
+.login-container.dark-theme ::v-deep .el-input__suffix {
+  background: transparent;
+  margin-right: 5px;
+}
+
+.login-container.dark-theme ::v-deep .el-input__suffix .el-input__suffix-inner .el-input__icon {
+  color: #ccc;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.login-container.dark-theme ::v-deep .el-input__suffix .el-input__suffix-inner .el-input__icon:hover {
+  color: #409eff;
 }
 
 .login-container ::v-deep .el-form-item {
@@ -328,22 +412,31 @@ export default {
   flex-direction: column;
   align-items: center;
   background: var(--bg-color);
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   position: relative;
   padding-top: 5vh;
   padding-bottom: 60px;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s, color 0.3s, background-image 0.3s;
+  overflow-y: auto;
 }
 
 .card {
   background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   box-shadow: var(--shadow);
   border-radius: 20px;
-  padding-top: 10px;
+  padding-top: 15px;
   padding-bottom: 25px;
   width: 100%;
   max-width: 42rem;
   position: relative;
-  transition: background-color 0.3s, box-shadow 0.3s;
+  transition: background-color 0.3s, box-shadow 0.3s, backdrop-filter 0.3s;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .title {
@@ -425,6 +518,8 @@ export default {
   cursor: pointer;
   transition: background 0.2s;
   height: 100%;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 .login-container ::v-deep .upload-btn:hover {
@@ -434,8 +529,10 @@ export default {
 .login-container ::v-deep .upload-filename {
   display: flex;
   align-items: center;
-  background: var(--input-bg);
-  color: #6b7680;
+  background: hsl(0deg 0% 100% / 15%);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  color: #333;
   font-size: 15px;
   border-radius: 0 12px 12px 0;
   padding: 0 10px;
@@ -444,6 +541,40 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 移动端响应式优化*/
+@media (max-width: 768px) {
+  .card{
+    width: 98% !important;
+  }
+  
+  .form-grid ::v-deep .el-button {
+    font-size: 0.9rem !important;
+    padding: 0.7rem 0.8rem !important;
+    margin: 0 2px !important;
+  }
+  
+  .el-row[type="flex"] {
+    margin-top: 8px !important;
+  }
+  
+  /* 手机端底部间距调整，避免与footer重合 */
+  .login-container {
+    padding-bottom: 120px !important;
+    min-height: auto !important;
+  }
+  
+  .footer {
+    position: relative !important;
+    bottom: auto !important;
+    margin-top: 20px !important;
+  }
+  
+  .card {
+    margin: 10px auto !important;
+  }
 }
 
 .login-container.dark-theme ::v-deep .upload-key {
@@ -460,13 +591,16 @@ export default {
   color: #fff !important;
 }
 .login-container.dark-theme ::v-deep .upload-key span {
-  background: #232323;
+  background: #23232339;
   color: #aaa !important;
 }
 
 .login-container.dark-theme ::v-deep .upload-filename {
-  background: var(--input-bg) !important;
-  color: var(--text-color) !important;
+  background: rgba(45, 45, 45, 0.2) !important;
+  backdrop-filter: blur(5px) !important;
+  -webkit-backdrop-filter: blur(5px) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
 }
 
 .footer {
@@ -483,13 +617,13 @@ export default {
   font-size: 0.9rem;
   color: #000000;
   font-family: system-ui;
-  color: var(--text-color);
+  color: #fefefe;
   text-decoration: none;
   transition: color 0.3s;
 }
 
 .footer a:hover {
-  text-decoration: underline;
+  color: #05d899;
 }
 
 .theme-switch-wrapper {
@@ -519,25 +653,27 @@ export default {
 
 /* Light theme variables */
 .login-container {
-  --bg-color: #f5f5f5;
-  --card-bg: #ffffff;
-  --title-color: #125fc7; /* Darker blue for title */
+  --bg-color: #ffff;
+  --bg-image: url('/static/img/bg_light.webp');
+  --card-bg: hsl(0deg 0% 100% / 15%);
+  --title-color: #1b58c9; /* Darker blue for title */
   --text-color: #3b3d3d;
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --success: #13af54;
-  --success-hover: #0e8942; /* Darker green */
+  --success-hover: #0e8942; 
   --danger: #d63031;
-  --danger-hover: #b247c2; /* Darker purple */
+  --danger-hover: #b247c2; 
   --primary: #409eff;
-  --primary-hover: #0f9281; /* Darker blue */
+  --primary-hover: #0f9281; 
   --switch-bg: #f0f0f0;
-  --icon-color: #494949;
+  --icon-color: #232323;
 }
 
 /* Dark theme variables */
 .login-container.dark-theme {
-  --bg-color: #1a1a1a;
-  --card-bg: #2d2d2d;
+  --bg-color: #ffffff;
+  --bg-image: url('/static/img/bg_dark.webp');
+  --card-bg: hsl(0deg 0% 100% / 5%);
   --title-color: #ffffff;
   --text-color: #e0e0e0;
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -597,11 +733,16 @@ export default {
 }
 
 .login-container ::v-deep .el-input-group__append {
-  background-color: var(--input-bg) !important;
-  border: none;
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(5px) !important;
+  -webkit-backdrop-filter: blur(5px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
   transition: background-color 0.3s;
 }
 .login-container.dark-theme ::v-deep .el-input-group__append {
-  background-color: var(--input-bg) !important;
+  background-color: rgba(45, 45, 45, 0.2) !important;
+  backdrop-filter: blur(5px) !important;
+  -webkit-backdrop-filter: blur(5px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
 }
 </style>
