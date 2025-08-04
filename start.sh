@@ -18,7 +18,7 @@ else
     exit 1
 fi
 
-BASE_URL="https://github.com/eooce/webssh/releases/download/webssh"
+BASE_URL="https://github.com/eooce/webssh/releases/download/latest"
 FILE_URL="${BASE_URL}/webssh_linux_${ARCH}"
 
 # 如果文件不存在，则下载
