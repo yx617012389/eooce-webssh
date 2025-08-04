@@ -76,7 +76,7 @@ module.exports = {
         }
       };
 
-      // Gzip 压缩
+      //  Gzip 压缩
       try {
         const CompressionPlugin = require('compression-webpack-plugin');
         config.plugins.push(
@@ -108,9 +108,9 @@ module.exports = {
       ];
     });
 
-    // 生产环境 source map
+    // 生产环境不生成 source map
     if (process.env.NODE_ENV === 'production') {
-      config.devtool('source-map');
+      config.devtool(false);
     }
   }
 };
