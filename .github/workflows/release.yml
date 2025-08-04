@@ -41,16 +41,6 @@ jobs:
         working-directory: ./frontend
         run: npm run build
 
-      - name: Clean unnecessary files
-        run: |
-          # 删除 source map 文件
-          find public/static -name "*.map" -delete
-          # 删除 gzip 文件
-          find public/static -name "*.gz" -delete
-          # 删除其他不必要的文件
-          find public/static -name "*.txt" -delete
-          find public/static -name "*.log" -delete
-
       - name: Build for multiple platforms
         env:
           CGO_ENABLED: 0
@@ -108,7 +98,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.event.inputs.tag }}
-          name: Release ${{ github.event.inputs.tag }}
+          name: webssh
+          generate_release_notes: false
           body: |
             ${{ github.event.inputs.release_notes }}
             
